@@ -46,7 +46,7 @@ canvas.height = size;
 canvas.parentElement.style.width = `${size}px`;
 canvas.parentElement.style.height = `${size}px`;
 
-// 초기 빈 배열 (치지직 연동 최적화)
+// 초기 빈 배열 (치지직 연동 규격)
 let items = [];
 
 const colors = ["#a3d139", "#6e4f42", "#9b21b7", "#00a3ff", "#8bc34a", "#e91e63", "#3f51b5", "#009688"];
@@ -267,7 +267,7 @@ function injectDonationData(donatorName, cheeseAmount) {
     }
 }
 
-// 가상 도네이션 시뮬레이터 연동부
+// 좌측 사이드바 가상 도네이션 시뮬레이터 연동부
 window.simulateDonation = function(amount) {
     if (isRotating || isStopping || rotationSpeed > 0) {
         showInputMessage("⚠️ 추첨 중에는 후원을 보낼 수 없습니다.");
@@ -294,13 +294,11 @@ window.simulateDonation = function(amount) {
     injectDonationData(targetItem.name, amount);
 };
 
-// 🔥 [100% 연동 확정] 치지직 공식 서드파티 우회 통합 소켓 엔진
+// 치지직 공식 서드파티 우회 통합 소켓 엔진
 function connectToChzzkLive(channelId) {
     handleChzzkDisconnect();
-
     showInputMessage("📡 치지직 브릿지 소켓 서버에 실시간 접속 요청 중...");
     
-    // 치지직 보안 패킷 우회 및 실시간 알림 가공 처리가 완료된 고성능 퍼블릭 서버 엔드포인트
     const bridgeWssUrl = `wss://api.chzzk-ext.2007.co.kr/ws/live/${channelId}`;
     
     try {
@@ -317,13 +315,9 @@ function connectToChzzkLive(channelId) {
         chzzkSocket.onmessage = (event) => {
             try {
                 const packet = JSON.parse(event.data);
-                
-                // 해당 브릿지 서버는 치즈 후원 발생 시 'donation' 타입 이벤트를 깔끔하게 정제해 내보냅니다.
                 if (packet && packet.type === "donation") {
                     const senderName = packet.nickname || "익명의후원자";
                     const cheeseCount = parseInt(packet.amount) || 0;
-                    
-                    // 기획서 팽창 메커니즘 엔진으로 즉시 전송 가동!
                     injectDonationData(senderName, cheeseCount);
                 }
             } catch (e) {

@@ -26,14 +26,38 @@
     --sim-bg: #1a1a1a;
 }
 
-.main-layout { display: flex; flex-direction: column; gap: 30px; align-items: center; width: 100%; max-width: 1050px; }
-body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Malgun Gothic', sans-serif; margin: 0; padding: 40px 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; transition: background-color 0.3s, color 0.3s; }
+.main-layout { display: flex; flex-direction: column; gap: 24px; align-items: center; width: 100%; max-width: 1300px; }
+body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Malgun Gothic', sans-serif; margin: 0; padding: 40px 10px; display: flex; justify-content: center; align-items: center; min-height: 100vh; box-sizing: border-box; transition: background-color 0.3s, color 0.3s; }
 .theme-switch-wrapper { position: absolute; top: 20px; right: 20px; }
 .theme-toggle-btn { background: var(--container-bg); color: var(--text-main); border: 1px solid var(--card-border); padding: 8px 16px; font-size: 14px; font-weight: bold; border-radius: 20px; cursor: pointer; box-shadow: 0 2px 8px var(--shadow); transition: all 0.2s ease; }
 .theme-toggle-btn:hover { transform: scale(1.05); border-color: #ffcc00; }
-.container { display: flex; gap: 60px; align-items: center; background: var(--container-bg); padding: 40px 50px; border-radius: 12px; box-shadow: 0 4px 25px var(--shadow); transition: background-color 0.3s, box-shadow 0.3s; width: 100%; box-sizing: border-box; }
-.roulette-section { text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; }
-.roulette-section h2 { font-size: 24px; color: var(--title-color); margin: 0 0 20px 0; }
+
+/* 💡 3단 분할 가로 flex 배치 밸런싱 */
+.container { display: flex; gap: 40px; align-items: flex-start; background: var(--container-bg); padding: 35px 40px; border-radius: 12px; box-shadow: 0 4px 25px var(--shadow); transition: background-color 0.3s, box-shadow 0.3s; width: 100%; box-sizing: border-box; }
+
+/* ⚙️ [1단: 좌측 사이드바 디자인] */
+.simulator-sidebar { width: 260px; display: flex; flex-direction: column; gap: 20px; background: var(--panel-bg); padding: 20px; border-radius: 10px; border: 1px solid var(--card-border); box-shadow: inset 0 0 10px var(--shadow); }
+.sidebar-header { border-bottom: 1px solid var(--card-border); padding-bottom: 10px; display: flex; flex-direction: column; gap: 6px; }
+.sidebar-header h3 { margin: 0; font-size: 16px; color: #ffcc00; }
+.sidebar-section { display: flex; flex-direction: column; gap: 10px; }
+.sidebar-section h4 { margin: 0; font-size: 13px; color: var(--text-sub); border-left: 3px solid #ffcc00; padding-left: 8px; }
+.side-guide-text { font-size: 11px; color: var(--text-sub); margin: 0; line-height: 1.4; }
+.vertical-buttons { display: flex; flex-direction: column; gap: 8px; }
+
+.reroll-status-board { font-size: 13px; font-weight: bold; }
+.reroll-status-board strong { color: #ffbb00; font-size: 15px; }
+.sim-mini-btn { background: #fee2e2; color: #ef4444; border: none; padding: 5px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.2s; width: 100%; text-align: center; }
+.sim-mini-btn:hover { background: #ef4444; color: white; }
+
+.config-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
+.config-item { display: flex; flex-direction: column; gap: 2px; }
+.config-item label { font-size: 11px; color: var(--text-sub); font-weight: bold; }
+.config-item input { background: var(--sim-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 6px 10px; color: var(--text-main); font-weight: bold; font-size: 13px; width: 100%; box-sizing: border-box; }
+.config-item input:focus { border-color: #ffcc00; outline: none; }
+
+/* [2단: 중앙 룰켓 영역] */
+.roulette-section { text-align: center; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.roulette-section h2 { font-size: 22px; color: var(--title-color); margin: 0 0 20px 0; }
 .roulette-wrapper { position: relative; }
 .arrow { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 28px; color: var(--title-color); z-index: 10; }
 canvas { border-radius: 50%; box-shadow: 0 4px 15px var(--shadow); display: block; }
@@ -55,74 +79,48 @@ button#actionBtn:active { transform: translate(-50%, -50%) scale(0.95); }
 @keyframes fadeOut { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0; } }
 @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-.control-panel { width: 380px; display: flex; flex-direction: column; }
-.item-list { list-style: none; padding: 0; margin: 0; max-height: 380px; overflow-y: auto; }
-.item-list li { display: flex; align-items: center; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 10px 15px; margin-bottom: 8px; box-shadow: 0 2px 4px var(--shadow); transition: background-color 0.3s, border-color 0.3s; }
+/* [3단: 우측 리스트 영역] */
+.control-panel { width: 350px; display: flex; flex-direction: column; }
+.item-list { list-style: none; padding: 0; margin: 0; max-height: 480px; overflow-y: auto; }
+.item-list li { display: flex; align-items: center; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; box-shadow: 0 2px 4px var(--shadow); transition: background-color 0.3s, border-color 0.3s; }
 .item-list li:has(.item-edit-input:focus) { border-color: #ffcc00; box-shadow: 0 0 10px rgba(255, 204, 0, 0.2); }
-.badge { width: 28px; height: 24px; border-radius: 12px; color: white; font-size: 12px; font-weight: bold; display: flex; justify-content: center; align-items: center; margin-right: 15px; }
-.item-edit-input { flex: 1; background: transparent; border: none; color: var(--text-main); font-size: 15px; font-weight: 500; font-family: inherit; padding: 2px 0; margin-right: 10px; width: 100%; }
+.badge { width: 24px; height: 22px; border-radius: 12px; color: white; font-size: 11px; font-weight: bold; display: flex; justify-content: center; align-items: center; margin-right: 12px; }
+.item-edit-input { flex: 1; background: transparent; border: none; color: var(--text-main); font-size: 14px; font-weight: 500; font-family: inherit; padding: 2px 0; margin-right: 8px; width: 100%; }
 .item-edit-input:focus { color: #ffcc00; outline: none; }
-.count-controller { display: flex; align-items: center; gap: 6px; background: var(--bg-color); padding: 4px 8px; border-radius: 6px; margin-right: 15px; border: 1px solid var(--card-border); }
-.count-btn { background: none; border: none; color: var(--text-main); font-size: 10px; cursor: pointer; padding: 2px 4px; font-weight: bold; border-radius: 4px; transition: background-color 0.1s; }
+.count-controller { display: flex; align-items: center; gap: 4px; background: var(--bg-color); padding: 4px 6px; border-radius: 6px; margin-right: 10px; border: 1px solid var(--card-border); }
+.count-btn { background: none; border: none; color: var(--text-main); font-size: 9px; cursor: pointer; padding: 2px; font-weight: bold; border-radius: 4px; }
 .count-btn:hover { background-color: var(--card-border); color: #ffcc00; }
-.item-count { font-size: 13px; font-weight: bold; color: var(--text-main); min-width: 22px; text-align: center; }
-.item-percent { font-size: 13px; font-weight: 600; color: var(--text-percent); width: 55px; text-align: right; margin-right: 15px; }
-.delete-row-btn { width: 22px; height: 22px; border-radius: 6px; background: #fee2e2; color: #ef4444; border: none; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s ease; }
+.item-count { font-size: 12px; font-weight: bold; color: var(--text-main); min-width: 18px; text-align: center; }
+.item-percent { font-size: 12px; font-weight: 600; color: var(--text-percent); width: 50px; text-align: right; margin-right: 10px; }
+.delete-row-btn { width: 20px; height: 20px; border-radius: 6px; background: #fee2e2; color: #ef4444; border: none; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; }
 .delete-row-btn:hover { background: #ef4444; color: white; }
-.add-item-box { display: flex; align-items: center; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px 15px; cursor: pointer; box-shadow: 0 2px 4px var(--shadow); transition: background-color 0.3s, border-color 0.3s; }
+.add-item-box { display: flex; align-items: center; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px 15px; cursor: pointer; box-shadow: 0 2px 4px var(--shadow); }
 .add-item-box:hover { border-color: #ffcc00; }
-.add-icon { width: 28px; color: var(--text-sub); font-size: 16px; display: flex; justify-content: center; margin-right: 15px; }
-.add-text { font-size: 14px; color: var(--text-sub); font-weight: 500; }
-.input-message { height: 18px; font-size: 13px; color: #ff4444; margin-top: 10px; font-weight: bold; }
+.add-icon { width: 24px; color: var(--text-sub); font-size: 14px; display: flex; justify-content: center; margin-right: 12px; }
+.add-text { font-size: 13px; color: var(--text-sub); font-weight: 500; }
+.input-message { height: 18px; font-size: 12px; color: #ff4444; margin-top: 10px; font-weight: bold; }
 
-.simulator-console { width: 100%; background: var(--container-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 24px 30px; box-shadow: 0 4px 20px var(--shadow); box-sizing: border-box; transition: background-color 0.3s, border-color 0.3s; }
-.simulator-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 14px; margin-bottom: 18px; }
-.simulator-header h3 { margin: 0; font-size: 18px; color: #ffcc00; }
-.reroll-status-board { font-size: 14px; color: var(--text-main); display: flex; align-items: center; gap: 12px; }
-.reroll-status-board strong { color: #ffbb00; font-size: 18px; text-shadow: 0 0 10px rgba(255,187,0,0.2); }
-.sim-mini-btn { background: #e2e8f0; color: #4a5568; border: none; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
-.dark-mode .sim-mini-btn { background: #333; color: #bbb; }
-.sim-mini-btn:hover { background: #ef4444; color: white; }
-.simulator-body { display: flex; gap: 30px; }
-.sim-config-group { display: flex; flex-direction: column; gap: 10px; width: 260px; padding-right: 25px; border-right: 1px solid var(--card-border); }
-.config-item { display: flex; flex-direction: column; gap: 4px; }
-.config-item label { font-size: 12px; color: var(--text-sub); font-weight: bold; }
-.config-item input { background: var(--sim-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 8px 10px; color: var(--text-main); font-weight: bold; font-size: 14px; }
-.config-item input:focus { border-color: #ffcc00; outline: none; }
-.sim-action-group { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-.sim-guide-text { font-size: 13px; color: var(--text-sub); margin: 0 0 14px 0; line-height: 1.4; }
-.sim-guide-text b { color: #ffcc00; }
-.sim-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
-.donation-btn { flex: 1; min-width: 140px; border: none; padding: 12px 14px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; transition: all 0.2s; text-align: center; color: #111; }
-.d-1000 { background: #ffeaa7; }
-.d-1000:hover { background: #ffdf6d; transform: translateY(-2px); }
-.d-5000 { background: #fdcb6e; }
-.d-5000:hover { background: #f1b23e; transform: translateY(-2px); }
-.d-10000 { background: #e1b12c; color: white; }
-.d-10000:hover { background: #c89a1c; transform: translateY(-2px); }
-.reroll-trigger { background: #34495e; color: white; flex: 2; min-width: 240px; }
-.reroll-trigger:hover { background: #2c3e50; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+/* 공통 버튼 서식 */
+.donation-btn { width: 100%; border: none; padding: 10px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; transition: all 0.2s; text-align: center; color: #111; }
+.d-1000 { background: #ffeaa7; } .d-1000:hover { background: #ffdf6d; transform: translateY(-1px); }
+.d-5000 { background: #fdcb6e; } .d-5000:hover { background: #f1b23e; transform: translateY(-1px); }
+.d-10000 { background: #e1b12c; color: white; } .d-10000:hover { background: #c89a1c; transform: translateY(-1px); }
+.reroll-trigger { background: #34495e; color: white; margin-bottom: 5px; }
+.reroll-trigger:hover { background: #2c3e50; transform: translateY(-1px); }
 
-/* 📡 [4단계 추가] 실제 치지직 연동 패널 디자인 */
-.chzzk-connect-panel {
-    width: 100%; background: var(--container-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 24px 30px; box-shadow: 0 4px 20px var(--shadow); box-sizing: border-box; transition: background-color 0.3s, border-color 0.3s;
-}
+/* 최하단 치지직 연동 패널 */
+.chzzk-connect-panel { width: 100%; background: var(--container-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 24px 30px; box-shadow: 0 4px 20px var(--shadow); box-sizing: border-box; }
 .chzzk-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 14px; margin-bottom: 18px; }
-.chzzk-header h3 { margin: 0; font-size: 18px; color: #00ffbb; } /* 치지직 그린색 부여 */
-
+.chzzk-header h3 { margin: 0; font-size: 18px; color: #00ffbb; } 
 .status-badge { font-size: 12px; font-weight: bold; padding: 4px 10px; border-radius: 20px; }
 .status-badge.disconnected { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444; }
 .status-badge.connected { background: rgba(0, 255, 187, 0.1); color: #00ffbb; border: 1px solid #00ffbb; animation: pulse 2s infinite; }
-
 .chzzk-input-group { display: flex; gap: 10px; margin-bottom: 12px; }
 #chzzkChannelId { flex: 1; background: var(--sim-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px 14px; color: var(--text-main); font-size: 14px; font-weight: 500; }
 #chzzkChannelId:focus { border-color: #00ffbb; outline: none; }
-
 #chzzkConnectBtn { background: #00ffbb; color: #0c0d10; border: none; padding: 0 24px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
 #chzzkConnectBtn:hover { background: #00cc99; transform: translateY(-1px); }
 #chzzkConnectBtn.active { background: #ef4444; color: white; }
-
 .chzzk-guide-text { font-size: 12px; color: var(--text-sub); margin: 0; line-height: 1.5; }
-.chzzk-guide-text code { background: var(--sim-bg); padding: 2px 4px; border-radius: 4px; font-family: consolas, monospace; color: #ffcc00; }
-
+.chzzk-guide-text code { background: var(--sim-bg); padding: 2px 4px; border-radius: 4px; color: #ffcc00; }
 @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }

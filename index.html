@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>치즈 돌림판 - 치지직 실시간 연동판</title>
+    <title>치즈 돌림판 - 프리미엄 3단 레이아웃</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="dark-mode">
@@ -15,6 +15,47 @@
     <div class="main-layout">
         
         <div class="container">
+            
+            <div class="simulator-sidebar">
+                <div class="sidebar-header">
+                    <h3>⚙️ 시뮬레이터 패널</h3>
+                    <div class="reroll-status-board">
+                        <span>리롤 비용: <strong id="currentRerollCost">1,000</strong> 🧀</span>
+                    </div>
+                    <button id="resetRerollBtn" class="sim-mini-btn" tabindex="-1" onmousedown="event.preventDefault();">비용 초기화</button>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>🎁 가상 후원 테스트</h4>
+                    <p class="side-guide-text">우측 목록에서 항목을 선택한 후 누르면 가중치가 즉시 팽창합니다.</p>
+                    <div class="vertical-buttons">
+                        <button class="donation-btn d-1000" onmousedown="event.preventDefault();" onclick="simulateDonation(1000)">🧀 1,000 치즈 후원</button>
+                        <button class="donation-btn d-5000" onmousedown="event.preventDefault();" onclick="simulateDonation(5000)">🧀 5,000 치즈 후원</button>
+                        <button class="donation-btn d-10000" onmousedown="event.preventDefault();" onclick="simulateDonation(10000)">🧀 10,000 치즈 후원</button>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>🔄 리롤 및 수치 설정</h4>
+                    <button id="simRerollBtn" class="donation-btn reroll-trigger">🔄 가상 리롤 실행</button>
+                    
+                    <div class="config-grid">
+                        <div class="config-item">
+                            <label>1가중치당 치즈</label>
+                            <input type="number" id="cheesePerCount" value="1000" min="100" step="100">
+                        </div>
+                        <div class="config-item">
+                            <label>리롤 기본 비용</label>
+                            <input type="number" id="rerollBaseCost" value="1000" min="0" step="500">
+                        </div>
+                        <div class="config-item">
+                            <label>리롤 회당 증가액</label>
+                            <input type="number" id="rerollStepCost" value="500" min="0" step="100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="roulette-section">
                 <h2>행운의 돌림판</h2>
                 <div class="roulette-wrapper">
@@ -42,43 +83,7 @@
                 
                 <div id="inputMessage" class="input-message"></div>
             </div>
-        </div>
 
-        <div class="simulator-console">
-            <div class="simulator-header">
-                <h3>🧀 가상 치즈 도네이션 & 리롤 시뮬레이터</h3>
-                <div class="reroll-status-board">
-                    <span>현재 누적 리롤 비용: <strong id="currentRerollCost">1,000</strong> 치즈</span>
-                    <button id="resetRerollBtn" class="sim-mini-btn" tabindex="-1">비용 초기화</button>
-                </div>
-            </div>
-            
-            <div class="simulator-body">
-                <div class="sim-config-group">
-                    <div class="config-item">
-                        <label>기본 1가중치당 치즈</label>
-                        <input type="number" id="cheesePerCount" value="1000" min="100" step="100">
-                    </div>
-                    <div class="config-item">
-                        <label>리롤 기본 비용</label>
-                        <input type="number" id="rerollBaseCost" value="1000" min="0" step="500">
-                    </div>
-                    <div class="config-item">
-                        <label>리롤 회당 증가액(체증)</label>
-                        <input type="number" id="rerollStepCost" value="500" min="0" step="100">
-                    </div>
-                </div>
-
-                <div class="sim-action-group">
-                    <p class="sim-guide-text">💡 <b>목록에서 항목을 클릭한 후</b> 아래 버튼을 누르면 해당 항목의 점유율이 후원금에 비례해 가상으로 증가합니다.</p>
-                    <div class="sim-buttons">
-                        <button class="donation-btn d-1000" onclick="simulateDonation(1000)">🧀 1,000 치즈 후원</button>
-                        <button class="donation-btn d-5000" onclick="simulateDonation(5000)">🧀 5,000 치즈 후원</button>
-                        <button class="donation-btn d-10000" onclick="simulateDonation(10000)">🧀 10,000 치즈 후원</button>
-                        <button id="simRerollBtn" class="donation-btn reroll-trigger">🔄 가상 리롤 실행 (치즈 차감 연출)</button>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="chzzk-connect-panel">
@@ -91,7 +96,7 @@
                     <input type="text" id="chzzkChannelId" placeholder="치지직 채널 고유 ID를 입력하세요 (예: 28da9d8...)" autocomplete="off">
                     <button id="chzzkConnectBtn">방송 연동 시작</button>
                 </div>
-                <p class="chzzk-guide-text">⚠️ 채널 ID는 스트리머 채널 주소창의 <code>chzzk.naver.com/<b>[이부분의문자열]</b></code>을 의미합니다. 연동 시 실제 시청자가 쏘는 치즈 액수만큼 항목이 자동 등록 및 팽창합니다.</p>
+                <p class="chzzk-guide-text">💡 주소창의 <code>chzzk.naver.com/live/<b>[이부분의문자열]</b></code>이 고유 ID입니다. 연동 시 실제 시청자의 치즈 후원액에 따라 항목이 가변 팽창합니다.</p>
             </div>
         </div>
 
