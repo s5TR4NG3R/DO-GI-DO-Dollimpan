@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>치즈 돌림판 - 치지직 실시간 연동판</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+
+    <div class="theme-switch-wrapper">
+        <button id="themeToggleBtn" class="theme-toggle-btn">☀️ 라이트 모드</button> 
+    </div>
+
+    <div class="main-layout">
+        
+        <div class="container">
+            <div class="roulette-section">
+                <h2>행운의 돌림판</h2>
+                <div class="roulette-wrapper">
+                    <div class="arrow">▼</div>
+                    <canvas id="rouletteCanvas"></canvas>
+                    <button id="actionBtn">시작</button>
+
+                    <div id="resultPopup" class="result-popup">
+                        <div class="popup-content">
+                            <div class="popup-title">🎉 추첨 완료 🎉</div>
+                            <div id="popupResultText" class="popup-text">항목명</div>
+                            <div id="popupSubText" class="popup-sub-text">화면 아무 곳이나 클릭하면 닫힙니다</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <ul id="itemList" class="item-list"></ul>
+                
+                <div id="addBtn" class="add-item-box">
+                    <span class="add-icon">＋</span>
+                    <span class="add-text">항목 추가</span>
+                </div>
+                
+                <div id="inputMessage" class="input-message"></div>
+            </div>
+        </div>
+
+        <div class="simulator-console">
+            <div class="simulator-header">
+                <h3>🧀 가상 치즈 도네이션 & 리롤 시뮬레이터</h3>
+                <div class="reroll-status-board">
+                    <span>현재 누적 리롤 비용: <strong id="currentRerollCost">1,000</strong> 치즈</span>
+                    <button id="resetRerollBtn" class="sim-mini-btn" tabindex="-1">비용 초기화</button>
+                </div>
+            </div>
+            
+            <div class="simulator-body">
+                <div class="sim-config-group">
+                    <div class="config-item">
+                        <label>기본 1가중치당 치즈</label>
+                        <input type="number" id="cheesePerCount" value="1000" min="100" step="100">
+                    </div>
+                    <div class="config-item">
+                        <label>리롤 기본 비용</label>
+                        <input type="number" id="rerollBaseCost" value="1000" min="0" step="500">
+                    </div>
+                    <div class="config-item">
+                        <label>리롤 회당 증가액(체증)</label>
+                        <input type="number" id="rerollStepCost" value="500" min="0" step="100">
+                    </div>
+                </div>
+
+                <div class="sim-action-group">
+                    <p class="sim-guide-text">💡 <b>목록에서 항목을 클릭한 후</b> 아래 버튼을 누르면 해당 항목의 점유율이 후원금에 비례해 가상으로 증가합니다.</p>
+                    <div class="sim-buttons">
+                        <button class="donation-btn d-1000" onclick="simulateDonation(1000)">🧀 1,000 치즈 후원</button>
+                        <button class="donation-btn d-5000" onclick="simulateDonation(5000)">🧀 5,000 치즈 후원</button>
+                        <button class="donation-btn d-10000" onclick="simulateDonation(10000)">🧀 10,000 치즈 후원</button>
+                        <button id="simRerollBtn" class="donation-btn reroll-trigger">🔄 가상 리롤 실행 (치즈 차감 연출)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chzzk-connect-panel">
+            <div class="chzzk-header">
+                <h3>📡 실제 Chzzk 채널 실시간 연동 설정</h3>
+                <span id="connectionStatus" class="status-badge disconnected">🔴 연결 끊김</span>
+            </div>
+            <div class="chzzk-body">
+                <div class="chzzk-input-group">
+                    <input type="text" id="chzzkChannelId" placeholder="치지직 채널 고유 ID를 입력하세요 (예: 28da9d8...)" autocomplete="off">
+                    <button id="chzzkConnectBtn">방송 연동 시작</button>
+                </div>
+                <p class="chzzk-guide-text">⚠️ 채널 ID는 스트리머 채널 주소창의 <code>chzzk.naver.com/<b>[이부분의문자열]</b></code>을 의미합니다. 연동 시 실제 시청자가 쏘는 치즈 액수만큼 항목이 자동 등록 및 팽창합니다.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
